@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,11 +24,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TokenFilter extends OncePerRequestFilter {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(TokenFilter.class);
+
 	@Autowired
 	SecurityUtils securityUtils;
 
 	@Autowired
 	RestSecurityProperties restSecProps;
+
+
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -38,7 +44,8 @@ public class TokenFilter extends OncePerRequestFilter {
 			try {
 				decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
 			} catch (FirebaseAuthException e) {
-				log.error("Firebase Exception:: ", e.getLocalizedMessage());
+				String message = e.getLocalizedMessage();
+				LOGGER.error("Firebase Exception: " + message);
 			}
 			if (decodedToken != null) {
 				User user = new User();

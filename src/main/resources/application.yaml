@@ -25,3 +25,4 @@ security:
    allowedpublicapis:
    - /favicon.ico
    - /public/data
+   - /register

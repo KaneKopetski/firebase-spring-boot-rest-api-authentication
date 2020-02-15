@@ -15,7 +15,7 @@ import com.google.firebase.FirebaseOptions;
 @Configuration
 public class FirebaseConfig {
 
-	@Value("${firebase.databaseUrl}")
+	@Value("https://fir-authtest-67442.firebaseio.com")
 	String firebaseDatabaseUrl;
 	
 	@Primary

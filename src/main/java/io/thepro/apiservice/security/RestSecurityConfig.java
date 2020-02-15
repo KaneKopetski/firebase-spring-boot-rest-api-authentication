@@ -65,9 +65,10 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf()
 				.disable().formLogin().disable().httpBasic().disable().exceptionHandling()
 				.authenticationEntryPoint(restAuthenticationEntryPoint()).and().authorizeRequests()
-				.antMatchers(restSecProps.getAllowedpublicapis().stream().toArray(String[]::new)).permitAll()
+				.antMatchers(restSecProps.getAllowedpublicapis().toArray(new String[0])).permitAll()
 				.anyRequest().authenticated();
 		http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
 	}
 
 }
